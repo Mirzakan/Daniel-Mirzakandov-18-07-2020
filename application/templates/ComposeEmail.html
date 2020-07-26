@@ -1,0 +1,46 @@
+{% extends "layout.html"%}
+
+{% block content %}
+
+<div class="container">
+    <form name="ComposeEmail" action="" method="post" novalidate>
+        <fieldset class="form-group">
+            <legend>{{title}}</legend>     
+            {{ form.hidden_tag() }}       
+                <p> {{ form.senderId.label }}</br>
+                    {{ form.senderId }}
+                    {% for error in form.senderId.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+            
+                <p> {{ form.reciverId.label }}</br>
+                    {{ form.reciverId }}
+                    {% for error in form.reciverId.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>        
+            
+                <p> {{ form.subject.label }}</br>
+                    {{ form.subject }}
+                    {% for error in form.subject.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+            
+                <p> {{ form.message.label }}</br>
+                    {{ form.message }}
+                    {% for error in form.message.errors %}
+                    <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+            
+                <p> 
+                    {{ form.submit(class_='btn') }}
+                </p>
+            
+        </fieldset>
+    </form>
+</div>
+
+{% endblock %}

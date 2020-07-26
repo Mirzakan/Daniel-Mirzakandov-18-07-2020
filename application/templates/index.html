@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script>
+  // add data that the vue js will work with to generate the html
+  var msgData = {{ msgData|tojson }};
+</script>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <!-- Filter Input-->
+        <label>Enter Sender ID:</label>
+        <input type="text" @input="getMessages">
+    </div>
+    <div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Sender:(ID)</th>
+                <th scope="col">Reciver:(ID)</th>
+            </tr>
+            </thead>
+            <tbody>
+                <!-- Messages from db -->
+                <tr v-for="msg in msgData.sent">
+                    <td>[[ msg.senderId ]]</td>
+                    <td>[[ msg.reciverId ]]</td>
+                </tr>       
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item">
+            <a class="nav-link" @click.prevent="setActive('Sent')" :class="{ active: isActive('Sent') }" href="#Sent">Sent</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" @click.prevent="setActive('From')" :class="{ active: isActive('From') }" href="#From">Inbox</a>
+            </li>
+        </ul>
+        <div class="tab-content py-3" id="myTabContent">
+            <div class="tab-pane" :class="{ 'show in': isActive('Sent') }" id="Sent">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">To:</th>
+                    <th scope="col">subject</th>
+                    <th scope="col">message</th>
+                    <th scope="col">date</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <!-- Messages from db -->
+                    <tr v-for="msg in msgData.sent">
+                        <td>[[ msg.reciverId ]]</td>
+                        <td>[[ msg.subject ]]</td>
+                        <td>[[ msg.message ]]</td>
+                        <td>[[ msg.date ]]</td>
+                        <td>
+                            <form action="{{url_for('removeIndex')}}" method="POST">
+                                <input type="hidden" name="senderId" :value="msg.senderId">
+                                <input type="hidden" name="reciverId" :value="msg.reciverId">
+                                <input type="hidden" name="subject" :value="msg.subject">
+                                <input type="hidden" name="message" :value="msg.message">
+                                <input type="hidden" name="date" :value="msg.date">
+                                <button><i class="glyphicon glyphicon-remove"></i></button>
+                            </form>
+                        </td>
+                    </tr>       
+                </tbody>
+            </table>
+            </div>
+            <div class="tab-pane" :class="{ 'show in': isActive('From') }" id="From">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">From:</th>
+                    <th scope="col">subject</th>
+                    <th scope="col">message</th>
+                    <th scope="col">date</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <!-- Messages from db -->
+                    <tr v-for="msg in msgData.inbox">
+                        <td>[[ msg.senderId ]]</td>
+                        <td>[[ msg.subject ]]</td>
+                        <td>[[ msg.message ]]</td>
+                        <td>[[ msg.date ]]</td>
+                        <td>
+                            <form action="{{url_for('removeIndex')}}" method="POST">
+                            <input type="hidden" name="senderId" :value="msg.senderId">
+                            <input type="hidden" name="reciverId" :value="msg.reciverId">
+                            <input type="hidden" name="subject" :value="msg.subject">
+                            <input type="hidden" name="message" :value="msg.message">
+                            <input type="hidden" name="date" :value="msg.date">
+                            <button><i class="glyphicon glyphicon-remove"></i></button>
+                            </form>
+                        </td>
+                    </tr>       
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
