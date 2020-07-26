@@ -14,7 +14,7 @@ var app = new Vue({
 			this.activeItem = menuItem
 		},
 		getMessages ( e ) {
-			// get vue instace
+			// get vue instance
 			let _ = this;
 			// clear the delay
 			clearTimeout(window.delay);
