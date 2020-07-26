@@ -48,7 +48,7 @@ def getMessages():
     userId = request.args.get('userId')
     if len(userId) > 0:
         inbox = Messages.ConvertToJsonNoDic(Messages.query.filter(Messages.reciverId==userId).all())
-        sent = Messages.ConvertTConvertToJsonNoDicoJson2(Messages.query.filter(Messages.senderId==userId).all())
+        sent = Messages.ConvertToJsonNoDic(Messages.query.filter(Messages.senderId==userId).all())
         msgDataUpdated = {
             'inbox': inbox,
             'sent': sent
